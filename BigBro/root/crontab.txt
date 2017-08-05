@@ -1,0 +1,4 @@
+# LoB crontab: start motion at boot
+@reboot motion -c /etc/motion/motion.conf
+
+

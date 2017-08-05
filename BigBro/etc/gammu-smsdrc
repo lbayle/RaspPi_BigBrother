@@ -1,0 +1,44 @@
+# Configuration file for Gammu SMS Daemon
+
+# LoB
+# https://wammu.eu/docs/manual/smsd/config.html
+# reload with : sudo service gammu-smsd restart
+# at boot     : sudo update-rc.d gammu-smsd enable
+ 
+
+# Gammu library configuration, see gammurc(5)
+[gammu]
+port = /dev/ttyUSB2
+connection = at
+#logformat = textall
+
+# SMSD configuration, see gammu-smsdrc(5)
+[smsd]
+logfile = syslog
+#logfile = /data/log/gammu-smsd.log
+debuglevel = 255
+
+PIN = 2338
+HangupCalls = 1
+RunOnReceive = /home/pi/Src/gammu_on_sms_receive.sh
+#RunOnSent = 
+
+# ------------------------
+# LoB SMS stored in files
+#service = files
+#inboxpath = /var/spool/gammu/inbox/
+#outboxpath = /var/spool/gammu/outbox/
+#sentsmspath = /var/spool/gammu/sent/
+#errorsmspath = /var/spool/gammu/error/
+
+# ------------------------
+# LoB SMS are stored in MySQL
+# import /usr/share/doc/gammu/examples/sql/mysql.sql.gz
+service = sql
+driver = native_mysql
+user = gammu
+password = gammu
+pc = localhost
+database = bigbro_gammu
+
+

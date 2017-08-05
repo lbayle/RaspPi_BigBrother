@@ -1,0 +1,5 @@
+# LoB
+
+@reboot /home/pi/Src/launch_vlc_http_server.sh
+
+

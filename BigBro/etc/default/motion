@@ -1,0 +1,5 @@
+# set to 'yes' to enable the motion daemon
+# LoB
+start_motion_daemon=no
+#start_motion_daemon=yes
+

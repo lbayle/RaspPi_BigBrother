@@ -1,0 +1,24 @@
+# LoB 20170626
+
+# https://github.com/EMnify/doc/wiki/How-to-use-a-Huawei-E3531-in-Modem-Mode
+# http://alexanderhoughton.co.uk/blog/guide-sending-an-sms-with-raspberry-pilinux-huawei-e303-mobile-dongle/
+
+# 12d1:1f01 	Huawei Technologies Co., Ltd. 	USB Mass Storage
+# 12d1:14dc 	Huawei Technologies Co., Ltd. 	3G Internet
+# 12d1:1001 	Huawei Technologies Co., Ltd. E169/E620/E800 HSDPA Modem 	Modem
+
+# Huawei E353 (3.se)
+
+TargetVendor=  0x12d1
+TargetProduct= 0x1f01 
+
+# switch to 12d1:1001 (modem mode, 3 virtual serial ports)
+MessageContent="55534243123456780000000000000011062000000100000000000000000000"
+NoDriverLoading=1
+
+
+# switch to 12d1:14dc (default HiLink CDC-Ether mode)
+# MessageContent="55534243123456780000000000000a11062000000000000100000000000000"
+
+# switch to 12d1:1442 (debug mode with 2 virtual serial ports)
+# MessageContent="55534243000000000000000000000011060000000000000000000000000000"
