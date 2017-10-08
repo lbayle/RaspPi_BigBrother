@@ -3,6 +3,7 @@
 /etc/default/isc-dhcp-server
 /etc/default/motion
 /etc/dhcp/dhcpd.conf
+/etc/gammurc
 /etc/gammu-smsdrc
 /etc/hostapd/hostapd.conf
 /etc/hosts
@@ -13,19 +14,10 @@
 /etc/motion/motion.conf.orig
 /etc/network/interfaces
 /etc/nginx/sites-available/default
-/etc/nginx/sites-enabled/default
-/etc/rc0.d/K01hostapd
-/etc/rc1.d/K01hostapd
-/etc/rc2.d/S01hostapd
-/etc/rc3.d/S01hostapd
-/etc/rc4.d/S01hostapd
-/etc/rc5.d/S01hostapd
-/etc/rc6.d/K01hostapd
 /etc/ssh/sshd_config
 /etc/ssmtp/ssmtp.conf
 /etc/sudoers
 /etc/sysctl.conf
-/etc/sysctl.d/99-sysctl.conf
 /etc/usb_modeswitch.d/12d1:1f01
 /etc/wvdial.conf
 /home/pi/Documents/setting-up-a-raspberry-pi-as-a-wifi-access-point.pdf
@@ -34,6 +26,7 @@
 /home/pi/Src/disable_internet_forward.sh
 /home/pi/Src/emboss.sh
 /home/pi/Src/enable_internet_forward.sh
+/home/pi/Src/gammu_on_sms_failure.sh
 /home/pi/Src/gammu_on_sms_receive.sh
 /home/pi/Src/launch_vlc_http_server.sh
 /home/pi/Src/motion_on_event_end.sh

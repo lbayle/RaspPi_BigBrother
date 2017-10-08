@@ -42,6 +42,16 @@
       echo "SMS engine: OFF";
    }
 
+   # check if Internet is running
+   echo "<br>";
+   exec("pgrep wvdial", $pids);
+   if(empty($pids)) {
+      echo "3G Internet : OFF";
+   } else {
+      echo "3G Internet : ON";
+   }
+   echo "<br>";
+
    # check if VLC is running
    echo "<br>";
    exec("pgrep vlc", $pids);

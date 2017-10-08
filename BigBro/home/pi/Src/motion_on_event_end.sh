@@ -48,9 +48,9 @@ function f_exit {
 function f_trace {
 
   if [ "xNO_DATE"  = "x$1" ] ; then
-    local trace="[${USER}::${MY_FILENAME}] $2"
+    local trace="[$(whoami)::${MY_FILENAME}] $2"
   else
-    local trace="$(date '+%Y-%m-%d %T') [${USER}::${MY_FILENAME}] $1"
+    local trace="$(date '+%Y-%m-%d %T') [$(whoami)::${MY_FILENAME}] $1"
   fi
   echo $trace
   echo $trace >> $LOG_FILE
@@ -218,18 +218,23 @@ if [ ! -f /tmp/mini_${imageFilename} ] ; then
 fi
 
 
-# --- send it by email
+# --- check internet conection
+wvdial_pid=$(ps -ef | grep wvdial | grep -v 'pppd' | grep -v 'sudo' | grep -v 'grep' | grep -v 'tail' | awk '{print $2}')
+ppp_pid=$(ps -ef    | grep wvdial | grep    'pppd' | grep -v 'sudo' | grep -v 'grep' | grep -v 'tail' | awk '{print $2}')
 
-# enable internet conection
-#f_trace "ps wvdial: $(ps -ef | grep -v 'grep' | grep wvdial)"
-isProcessRunning=$(ps -ef | grep -v "grep" | grep "wvdial" | wc -l | xargs echo)
-f_trace "nb wvdial Process Running=$isProcessRunning"
-if [ $isProcessRunning -eq 0 ]; then
+[ "${wvdial_pid}x" == 'x' ] && f_trace "WARN: wvdial is not running !"
+[ "${ppp_pid}x" == 'x' ]    && f_trace "WARN: ppp    is not running !"
+
+#if [ "${wvdial_pid}x" == 'x' ] || [ "${ppp_pid}x" == 'x' ] ; then
+if [ "${ppp_pid}x" == 'x' ] ; then
   f_trace "start wvdial..."
-  wvdial &
-  sleep 5
+  [ "${wvdial_pid}x" != 'x' ] && kill -9 ${wvdial_pid}
+  wvdial pin >> /data/log/wvdial.log 2>&1
+  wvdial freeMobile >> /data/log/wvdial.log 2>&1 &
+  sleep 8
 fi
 
+# --- send it by email
 f_trace "send email alert to $destEmail"
 cp ${DIR_PICTURES}/${imageFilename} ${DIR_SENT_PICTURES}/${imageFilename}
 
@@ -238,13 +243,29 @@ mailSubject="WARNING Barcelo : activite suspecte ${latestEvent}"
 [ -f /tmp/mini_${imageFilename} ] && mailArgs="${mailArgs} --attach=/tmp/mini_${imageFilename}"
 [ -f /tmp/mini_${diffFile} ]      && mailArgs="${mailArgs} --attach=/tmp/mini_${diffFile}"
 
-echo "${mailMsg}" | mail ${mailArgs} -s "$mailSubject" $destEmail
+echo "${mailMsg}" | mail ${mailArgs} -s "$mailSubject" $destEmail >> $LOG_FILE 2>&1
 retCode=$?
 if [[ $retCode -ne 0 ]] ; then
-  f_trace "mail FAILED retCode=$retCode"
+  f_trace "mail ${latestEvent} FAILED retCode=$retCode"
+  wvdial_pid=$(ps -ef | grep wvdial | grep -v 'pppd' | grep -v 'sudo' | grep -v 'grep' | grep -v 'tail' | awk '{print $2}')
+  f_trace "restart wvdial ($wvdial_pid)..."
+  [ "${wvdial_pid}x" != 'x' ] && kill -9 ${wvdial_pid}
+  wvdial pin >> /data/log/wvdial.log 2>&1
+  wvdial freeMobile >> /data/log/wvdial.log 2>&1 &
+  sleep 15
+
+  # retry...
+  echo "${mailMsg}" | mail ${mailArgs} -s "$mailSubject" $destEmail >> $LOG_FILE 2>&1
+  retCode=$?
+  if [[ $retCode -ne 0 ]] ; then
+    f_trace "mail ${latestEvent} FAILED retCode=$retCode"
+  else
+    f_trace "retry: mail ${latestEvent} sent !"
+  fi
+
 fi
 
-#sudo rm /tmp/mini_*
+rm -f /tmp/mini_*
 
 f_exit 0
 

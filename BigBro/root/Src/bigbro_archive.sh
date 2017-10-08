@@ -37,11 +37,11 @@ mkdir -p ${BASE_DIR}
 
 # ---------------------------------
 # get modified config files from various places
-find /etc               -name "*" | xargs grep -l "LoB" > /tmp/configfiles.txt
-find /var/www/html      -name "*" | xargs grep -l "LoB" >> /tmp/configfiles.txt
-find /home/pi/Src       -name "*" | xargs grep -l "LoB" >> /tmp/configfiles.txt
-find /home/pi/Documents -name "*" | xargs grep -l "LoB" >> /tmp/configfiles.txt
-find /root/Src          -name "*" | xargs grep -l "LoB" >> /tmp/configfiles.txt
+find /etc               -name "*" -type f | xargs grep -l "LoB" > /tmp/configfiles.txt
+find /var/www/html      -name "*" -type f | xargs grep -l "LoB" >> /tmp/configfiles.txt
+find /home/pi/Src       -name "*" -type f | xargs grep -l "LoB" >> /tmp/configfiles.txt
+find /home/pi/Documents -name "*" -type f | xargs grep -l "LoB" >> /tmp/configfiles.txt
+find /root/Src          -name "*" -type f | xargs grep -l "LoB" >> /tmp/configfiles.txt
 
 sort -u /tmp/configfiles.txt -o ${FILE_CFG_LIST}
 rm /tmp/configfiles.txt

@@ -4,7 +4,9 @@
 # https://wammu.eu/docs/manual/smsd/config.html
 # reload with : sudo service gammu-smsd restart
 # at boot     : sudo update-rc.d gammu-smsd enable
- 
+
+
+# Barcelo PUK=60818837 
 
 # Gammu library configuration, see gammurc(5)
 [gammu]
@@ -14,14 +16,21 @@ connection = at
 
 # SMSD configuration, see gammu-smsdrc(5)
 [smsd]
-logfile = syslog
-#logfile = /data/log/gammu-smsd.log
+#logfile = syslog
+logfile = /data/log/gammu-smsd.log
 debuglevel = 255
 
-PIN = 2338
+
+PIN = 1234
 HangupCalls = 1
 RunOnReceive = /home/pi/Src/gammu_on_sms_receive.sh
 #RunOnSent = 
+RunOnFailure = /home/pi/Src/gammu_on_sms_failure.sh
+
+# LoB en test:
+CheckNetwork = 1
+HardResetFrequency = 86400
+PhoneID = BigBro
 
 # ------------------------
 # LoB SMS stored in files
