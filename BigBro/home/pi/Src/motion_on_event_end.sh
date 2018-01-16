@@ -120,20 +120,29 @@ function f_findBestComparedFile {
 # => quite FAST & reliable
 function f_findMaxPixFileAndCompare {
 
-  # get refFile, and apply highpass filter
-  local refFile=$(ls ${latestEvent}_0_*.jpg | head -1) # changedPix=0
+  # Note: on a Pi reboot (power cut), 'motion' resets event id to '1'
+  # so we need to check current date to avoid choosing a picture
+  # of a previous event with same id
+  local today=$(date '+%Y%m%d')
 
-  # get picture with most changed pixels, based on filename
+  # get refFile, and apply highpass filter
+  local refFile=$(ls -t ${latestEvent}_0_*${today}*.jpg | head -1) # changedPix=0
+  f_trace "refFile = ${refFile}"
+
+  # get picture with most changed pixels, based on filename & date
   local maxChangedPixels=0
   local changedPixels=0
-  for fname in $(ls ${latestEvent}_*.jpg) ; do
+  for fname in $(ls ${latestEvent}_*${today}*.jpg) ; do
     changedPixels=$(echo ${fname} | cut -d'_' -f2)
-    [ $maxChangedPixels -lt $changedPixels ] && maxChangedPixels=$changedPixels
+    if [ $maxChangedPixels -lt $changedPixels ] ; then
+      maxChangedPixels=$changedPixels
+      imageFilename=${fname}           # set global variable
+    fi
   done
 
   # set global variables
-  imageFilename=$(ls ${latestEvent}_${maxChangedPixels}_*.jpg  | head -1)
-  diffFile=${latestEvent}_0_diff.jpg
+  #imageFilename=$(ls ${latestEvent}_${maxChangedPixels}_*${today}*.jpg  | head -1)
+  diffFile=${latestEvent}_0_${today}_diff.jpg
 
   # apply brightness filter
   # https://stackoverflow.com/questions/39678335/ignoring-differences-in-brightness-with-imagemagick-compare-tool
