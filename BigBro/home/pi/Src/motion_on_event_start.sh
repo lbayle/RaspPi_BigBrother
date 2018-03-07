@@ -6,6 +6,10 @@
 # motion has been configured to wait for 15s inactivity before running motion_on_event_end.sh
 # so we have a fiew seconds to restart processes
 
+# Note:
+# I don't know why, but starting wvdial does not always start ppp
+# whereas a manual start (from a terminal) does it. what's wrong ?
+
 # +CME ERROR: 11 => Sim PIN required
 # +CME ERROR: 12 => Sim PUK required
 

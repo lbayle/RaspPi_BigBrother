@@ -231,7 +231,7 @@ fi
 wvdial_pid=$(ps -ef | grep wvdial | grep -v 'pppd' | grep -v 'sudo' | grep -v 'grep' | grep -v 'tail' | awk '{print $2}')
 ppp_pid=$(ps -ef    | grep wvdial | grep    'pppd' | grep -v 'sudo' | grep -v 'grep' | grep -v 'tail' | awk '{print $2}')
 
-[ "${wvdial_pid}x" == 'x' ] && f_trace "WARN: wvdial is not running !"
+#[ "${wvdial_pid}x" == 'x' ] && f_trace "WARN: wvdial is not running !"
 [ "${ppp_pid}x" == 'x' ]    && f_trace "WARN: ppp    is not running !"
 
 #if [ "${wvdial_pid}x" == 'x' ] || [ "${ppp_pid}x" == 'x' ] ; then
@@ -276,7 +276,14 @@ fi
 
 rm -f /tmp/mini_*
 
-f_exit 0
+# stop internet 
+#wvdial_pid=$(ps -ef | grep wvdial | grep -v 'pppd' | grep -v 'sudo' | grep -v 'grep' | grep -v 'tail' | awk '{print $2}')
+#ppp_pid=$(ps -ef    | grep wvdial | grep    'pppd' | grep -v 'sudo' | grep -v 'grep' | grep -v 'tail' | awk '{print $2}')
+#f_trace "stoping internet (kill $wvdial_pid, $ppp_pid)..."
+#kill -9 $wvdial_pid >> $LOG_FILE 2>&1
+#kill $ppp_pid >> $LOG_FILE 2>&1
+
+f_exit $retCode
 
 # the end.
 

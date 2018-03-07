@@ -44,7 +44,7 @@
 
    # check if Internet is running
    echo "<br>";
-   exec("pgrep wvdial", $pids);
+   exec("pgrep pppd", $pids);
    if(empty($pids)) {
       echo "3G Internet : OFF";
    } else {
@@ -54,8 +54,8 @@
 
    # check if VLC is running
    echo "<br>";
-   exec("pgrep vlc", $pids);
-   if(empty($pids)) {
+   exec("pgrep vlc", $pids_vlc);
+   if(empty($pids_vlc)) {
       echo "VLC Muser Player : OFF";
    } else {
       echo "VLC Muser Player : ON";

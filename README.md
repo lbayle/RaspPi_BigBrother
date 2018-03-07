@@ -46,3 +46,6 @@ Clean motion pictures, database, logfiles to save HardDisk space - Administrator
 - [RaspPI as WIFI access point Server](https://cdn-learn.adafruit.com/downloads/pdf/setting-up-a-raspberry-pi-as-a-wifi-access-point.pdf) - DHCP Server configuration
 - [Internet via 3G dongle](http://www.magdiblog.fr/boa-pi-timelapse/la-connexion-reseau-3g/) - [FRENCH] wvdial configuration
 
+
+## Documentation
+http://www.smssolutions.net/tutorials/gsm/gsmerrorcodes/
