@@ -11,7 +11,7 @@ Scripts & configuration files to manage a RaspberryPi as a video surveillance de
 ### Hardware
 - [Raspberry Pi 3 Model B](https://www.raspberrypi.org/products/raspberry-pi-3-model-b/)
 - [Raspberry Pi v2.1 8 MP 1080p Module Camera](https://www.raspberrypi.org/products/camera-module-v2/)
-- 3G Dongle
+- [3G Dongle Huawei E3531](https://www.amazon.fr/dp/B00L64LSWS/ref=pe_3044141_189395771_TE_dp_1)
 
 ### Software
 - gammu
